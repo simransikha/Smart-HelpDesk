@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('./pages/login-register.css');
+@import url('./pages/tickets.css');
+@import url('./pages/ticket-detail.css');
+@import url('./pages/kb.css');
+@import url('./pages/settings.css');

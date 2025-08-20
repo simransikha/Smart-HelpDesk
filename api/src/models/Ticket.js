@@ -11,6 +11,7 @@ const TicketSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   category: { type: String, enum: ['billing','tech','shipping','other'], default: 'other' },
+  attachments: [{ type: String }],
   status: { type: String, enum: ['open','waiting_human','resolved'], default: 'open', index: true },
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   messages: [MessageSchema]

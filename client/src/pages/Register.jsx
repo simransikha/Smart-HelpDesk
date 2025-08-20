@@ -7,6 +7,7 @@ export default function Register() {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [role, setRole] = useState("user");
 	const [error, setError] = useState("");
 	const [success, setSuccess] = useState("");
 	const [loading, setLoading] = useState(false);
@@ -18,7 +19,7 @@ export default function Register() {
 		setError("");
 		setSuccess("");
 		try {
-			const { data } = await API.post("/auth/register", { name, email, password });
+			const { data } = await API.post("/auth/register", { name, email, password, role });
 			setSuccess("Registration successful! You can now login.");
 			setTimeout(() => nav("/"), 1500);
 		} catch (err) {
@@ -46,6 +47,14 @@ export default function Register() {
 				<div className="form-group">
 					<label className="form-label" htmlFor="password">Password</label>
 					<input className="form-input" type="password" id="password" name="password" value={password} onChange={e=>setPassword(e.target.value)} required />
+				</div>
+				<div className="form-group">
+					<label className="form-label" htmlFor="role">Role</label>
+					<select className="form-input" id="role" name="role" value={role} onChange={e=>setRole(e.target.value)} required>
+						<option value="user">User</option>
+						<option value="agent">Agent</option>
+						<option value="admin">Admin</option>
+					</select>
 				</div>
 				<button className="form-btn" type="submit" disabled={loading}>
 					{loading ? "Registering..." : "Register"}

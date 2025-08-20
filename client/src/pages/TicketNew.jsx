@@ -7,6 +7,7 @@ export default function TicketNew() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("other");
+  const [attachments, setAttachments] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const nav = useNavigate();
@@ -16,7 +17,12 @@ export default function TicketNew() {
     setLoading(true);
     setError("");
     try {
-      await API.post("/tickets", { title, description, category });
+      await API.post("/tickets", {
+        title,
+        description,
+        category,
+        attachments: attachments.split(',').map(a=>a.trim()).filter(Boolean)
+      });
       nav("/tickets");
     } catch (err) {
       setError(err.response?.data?.error || "Failed to create ticket.");
@@ -46,6 +52,10 @@ export default function TicketNew() {
             <option value="shipping">Shipping</option>
             <option value="other">Other</option>
           </select>
+        </div>
+        <div className="form-group">
+          <label className="form-label" htmlFor="attachments">Attachments (URLs, comma separated)</label>
+          <input className="form-input" type="text" id="attachments" value={attachments} onChange={e=>setAttachments(e.target.value)} placeholder="https://..." />
         </div>
         <button className="form-btn" type="submit" disabled={loading}>
           {loading ? "Creating..." : "Create Ticket"}

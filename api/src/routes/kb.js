@@ -29,9 +29,10 @@ router.post('/', auth(), requireRole('admin'), async (req,res,next)=>{
   try{
     const schema = Joi.object({
       title: Joi.string().required(),
-      body: Joi.string().required(),
+      content: Joi.string().required(),
+      body: Joi.string().allow('').default(''),
       tags: Joi.array().items(Joi.string()).default([]),
-      status: Joi.string().valid('draft','published').default('published')
+      status: Joi.string().valid('draft','published').default('draft')
     });
     const payload = await schema.validateAsync(req.body);
     const a = await Article.create(payload);
@@ -43,7 +44,8 @@ router.put('/:id', auth(), requireRole('admin'), async (req,res,next)=>{
   try{
     const schema = Joi.object({
       title: Joi.string(),
-      body: Joi.string(),
+      content: Joi.string(),
+      body: Joi.string().allow(''),
       tags: Joi.array().items(Joi.string()),
       status: Joi.string().valid('draft','published')
     });

@@ -32,27 +32,35 @@ export default function Setting() {
 		}
 	};
 
-	return (
-		<div className="settings-container">
-			<h2 className="settings-title">Settings</h2>
-			{loading && <div className="loading-msg">Loading settings...</div>}
-			{error && <div className="error-msg">{error}</div>}
-			{success && <div className="success-msg">{success}</div>}
-			{!loading && (
-				<form onSubmit={handleSave} autoComplete="off">
-					<div className="settings-group">
-						<label className="settings-label" htmlFor="siteName">Site Name</label>
-						<input className="settings-input" type="text" id="siteName" name="siteName" value={config.siteName || ""} onChange={handleChange} />
-					</div>
-					<div className="settings-group">
-						<label className="settings-label" htmlFor="supportEmail">Support Email</label>
-						<input className="settings-input" type="email" id="supportEmail" name="supportEmail" value={config.supportEmail || ""} onChange={handleChange} />
-					</div>
-					<button className="settings-btn" type="submit" disabled={saving}>
-						{saving ? "Saving..." : "Save Settings"}
-					</button>
-				</form>
-			)}
-		</div>
-	);
-}
+		return (
+			<div className="settings-container">
+				<h2 className="settings-title">Settings</h2>
+				{loading && <div className="loading-msg">Loading settings...</div>}
+				{error && <div className="error-msg">{error}</div>}
+				{success && <div className="success-msg">{success}</div>}
+				{!loading && (
+					<form onSubmit={handleSave} autoComplete="off">
+						<div className="settings-group">
+							<label className="settings-label" htmlFor="siteName">Site Name</label>
+							<input className="settings-input" type="text" id="siteName" name="siteName" value={config.siteName || ""} onChange={handleChange} />
+						</div>
+						<div className="settings-group">
+							<label className="settings-label" htmlFor="supportEmail">Support Email</label>
+							<input className="settings-input" type="email" id="supportEmail" name="supportEmail" value={config.supportEmail || ""} onChange={handleChange} />
+						</div>
+						<div className="settings-group">
+							<label className="settings-label" htmlFor="confidenceThreshold">Agent Confidence Threshold</label>
+							<input className="settings-input" type="number" id="confidenceThreshold" name="confidenceThreshold" min="0" max="1" step="0.01" value={config.confidenceThreshold || 0.7} onChange={handleChange} />
+						</div>
+						<div className="settings-group">
+							<label className="settings-label" htmlFor="autoClose">Auto-Close Tickets</label>
+							<input className="settings-checkbox" type="checkbox" id="autoClose" name="autoClose" checked={!!config.autoClose} onChange={e=>setConfig({...config, autoClose: e.target.checked})} />
+						</div>
+						<button className="settings-btn" type="submit" disabled={saving}>
+							{saving ? "Saving..." : "Save Settings"}
+						</button>
+					</form>
+				)}
+			</div>
+		);
+	}
